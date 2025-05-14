@@ -1,24 +1,26 @@
-import { Component } from '@angular/core';
-import { DUMMY_USERS } from '../dummy-users';
-
-const randomIndex = Math.floor(Math.random() * DUMMY_USERS.length);
+import {
+  Component,
+  computed,
+  input,
+  output,
+} from '@angular/core';
+import type { User } from './user.model';
 
 @Component({
   selector: 'app-user',
   imports: [],
   templateUrl: './user.component.html',
-  styleUrl: './user.component.css'
+  styleUrls: ['./user.component.css'], // Fixed property name
 })
 export class UserComponent {
-  selectedUser = DUMMY_USERS[randomIndex];
+  user = input.required<User>();
+  selectSignal = output<string>();
+  slected = input.required<boolean>();
+  imageUrl = computed(() => {
+    return `users/${this.user().avatar}`;
+  })
 
-  get imagePath() {
-    return `users/${this.selectedUser.avatar}`;
-  }
-
-  onUserClick() {
-    console.log('clicked');
-    const randomIndex = Math.floor(Math.random() * DUMMY_USERS.length);
-    this.selectedUser = DUMMY_USERS[randomIndex];
+  onSelectUser() {
+    this.selectSignal.emit(this.user().id);
   }
 }
