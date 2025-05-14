@@ -1,9 +1,9 @@
 import { Component, input, computed, signal } from '@angular/core';
 import type { User } from '../user/user.model';
 import { TaskComponent } from './task/task.component';
-import { DUMMY_TASKS } from './dummy-tasks';
-import { Task } from './task/task.model';
 import { NewTaskComponent } from './new-task/new-task.component';
+import { TaskService } from './tasks.service';
+import { Task } from './task/task.model';
 
 @Component({
   selector: 'app-tasks',
@@ -12,34 +12,25 @@ import { NewTaskComponent } from './new-task/new-task.component';
   imports: [TaskComponent, NewTaskComponent],
 })
 export class TasksComponent {
-  // Also modify this to fix the original NG0950 error
   user = input.required<User>();
-  tasks = signal(DUMMY_TASKS);
   addTask = signal(false);
-
-  selectedUserTasks = computed(() => {
-    return this.tasks().filter((task) => task.userId === this.user().id);
+  
+  // Create a computed signal for the user's tasks
+  userTasks = computed(() => {
+    return this.taskService.getUserTasks(this.user().id);
   });
 
-  completeTask(taskId: string) {
-    console.log('Task completed:', taskId);
-    this.tasks.update((tasks) => {
-      return tasks.filter((task) => task.id !== taskId);
-    });
+  constructor(private taskService: TaskService) {}
+
+  onCompleteTask(taskId: string) {
+    this.taskService.completeTask(taskId);
   }
 
   onStartAddTask() {
     this.addTask.set(true);
   }
 
-  onCancelAddTask() {
-    this.addTask.set(false);
-  }
-
-  onAddTask(task: Task) {
-    this.tasks.update((tasks) => {
-      return [...tasks, task];
-    });
+  close() {
     this.addTask.set(false);
   }
 }

@@ -5,10 +5,11 @@ import {
   output,
 } from '@angular/core';
 import type { User } from './user.model';
+import { CardComponent } from '../shared/card/card.component';
 
 @Component({
   selector: 'app-user',
-  imports: [],
+  imports: [CardComponent],
   templateUrl: './user.component.html',
   styleUrls: ['./user.component.css'], // Fixed property name
 })
