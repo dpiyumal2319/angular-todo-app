@@ -22,10 +22,6 @@ export class TasksComponent {
 
   constructor(private taskService: TaskService) {}
 
-  onCompleteTask(taskId: string) {
-    this.taskService.completeTask(taskId);
-  }
-
   onStartAddTask() {
     this.addTask.set(true);
   }
