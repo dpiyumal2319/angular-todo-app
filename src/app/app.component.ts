@@ -1,14 +1,11 @@
 import { Component, computed, signal } from '@angular/core';
-import { HeaderComponent } from './header/header.component';
-import { UserComponent } from './user/user.component'; // Ensure UserComponent is imported
-import { TasksComponent } from './tasks/tasks.component';
 import { DUMMY_USERS } from './dummy-users'; // Import the DUMMY_USERS array
 
 @Component({
   selector: 'app-root',
-  imports: [HeaderComponent, UserComponent, TasksComponent], // Ensure UserComponent is included here
   styleUrls: ['./app.component.css'],
   templateUrl: './app.component.html',
+  standalone: false,
 })
 export class AppComponent {
   title = 'my-first-angular-app';
