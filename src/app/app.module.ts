@@ -22,10 +22,8 @@ import { BrowserModule } from "@angular/platform-browser";
     ],
     bootstrap: [AppComponent],
     imports: [
-        BrowserModule,
         FormsModule,
-        DatePipe
-        // REMOVE NewTaskComponent from here
+        BrowserModule,
     ],
 })
 export class AppModule { }
